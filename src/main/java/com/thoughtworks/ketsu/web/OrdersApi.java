@@ -23,7 +23,7 @@ public class OrdersApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response placeOrder(Map<String, Object> info,
                                @Context Routes routes) {
-        user.placeOrder(info);
-        return Response.created(routes.orderUrl(user.getId(), "")).build();
+
+        return Response.created(routes.orderUrl(user.getId(), user.placeOrder(info).getId())).build();
     }
 }
