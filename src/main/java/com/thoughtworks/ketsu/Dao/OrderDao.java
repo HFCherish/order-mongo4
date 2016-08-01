@@ -3,10 +3,13 @@ package com.thoughtworks.ketsu.Dao;
 import com.thoughtworks.ketsu.domain.users.Order;
 import com.thoughtworks.ketsu.infrastructure.mongo.mappers.OrderMapper;
 import com.thoughtworks.ketsu.util.SafeInjector;
+import org.jongo.Find;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
+import org.jongo.MongoCursor;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,5 +39,15 @@ public class OrderDao implements OrderMapper {
     @Override
     public Order findById(String id) {
         return SafeInjector.injectMembers(orderCollection.findOne(withOid(id)).as(Order.class));
+    }
+
+    @Override
+    public List<Order> findAllOf(String userId) {
+        List<Order> orders = new ArrayList<>();
+        MongoCursor<Order> cursor = orderCollection.find("{user_id:#}", userId).as(Order.class);
+        while(cursor.hasNext()) {
+            orders.add(SafeInjector.injectMembers(cursor.next()));
+        }
+        return orders;
     }
 }
