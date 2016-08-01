@@ -3,6 +3,7 @@ package com.thoughtworks.ketsu.web;
 import com.thoughtworks.ketsu.domain.products.Product;
 import com.thoughtworks.ketsu.domain.products.ProductRepository;
 import com.thoughtworks.ketsu.domain.users.Order;
+import com.thoughtworks.ketsu.domain.users.Payment;
 import com.thoughtworks.ketsu.domain.users.User;
 import com.thoughtworks.ketsu.domain.users.UserRepository;
 import com.thoughtworks.ketsu.support.ApiSupport;
@@ -61,7 +62,7 @@ public class PaymentApiTest extends ApiSupport{
     @Test
     public void should_get_payment() {
         Map<String, Object> info = paymentJsonForTest();
-        order.pay(info);
+        Payment pay = order.pay(info);
         Response response = get(baseUrl);
 
         assertThat(response.getStatus(), is(200));
@@ -70,6 +71,7 @@ public class PaymentApiTest extends ApiSupport{
         assertThat(fetched.get("uri").toString(), containsString(baseUrl));
         assertThat(fetched.get("pay_type"), is(info.get("pay_type")));
         assertThat(fetched.get("amount"), is(info.get("amount")));
+        assertThat(fetched.get("created_at"), is(pay.getCreatedAt().toString()));
 
     }
 }

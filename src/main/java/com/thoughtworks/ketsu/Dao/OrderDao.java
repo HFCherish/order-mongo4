@@ -7,6 +7,7 @@ import com.thoughtworks.ketsu.domain.users.Order;
 import com.thoughtworks.ketsu.domain.users.Payment;
 import com.thoughtworks.ketsu.infrastructure.mongo.mappers.OrderMapper;
 import com.thoughtworks.ketsu.util.SafeInjector;
+import org.joda.time.DateTime;
 import org.jongo.*;
 
 import javax.inject.Inject;
@@ -61,6 +62,7 @@ public class OrderDao implements OrderMapper {
 
     @Override
     public Payment pay(Map<String, Object> info, String orderId) {
+        info.put("created_at", new DateTime().toString());
         orderCollection.update(withOid(orderId)).with("{$set: {payment:#}}", info);
         return getPaymentOf(orderId);
     }
