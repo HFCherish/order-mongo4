@@ -39,6 +39,5 @@ public class PaymentOperationTest {
 
         assertThat(fetched.isPresent(), is(true));
         assertThat(fetched.get().order.getId(), is(pay.order.getId()));
-
     }
 }
