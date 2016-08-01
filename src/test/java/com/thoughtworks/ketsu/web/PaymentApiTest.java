@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import java.util.Map;
 
 import static com.thoughtworks.ketsu.support.TestHelper.*;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -64,6 +65,11 @@ public class PaymentApiTest extends ApiSupport{
         Response response = get(baseUrl);
 
         assertThat(response.getStatus(), is(200));
+        Map fetched = response.readEntity(Map.class);
+        assertThat(fetched.get("order_uri").toString(), containsString("/users/" + user.getId() + "/orders/" + order.getId()));
+        assertThat(fetched.get("uri").toString(), containsString(baseUrl));
+        assertThat(fetched.get("pay_type"), is(info.get("pay_type")));
+        assertThat(fetched.get("amount"), is(info.get("amount")));
 
     }
 }
