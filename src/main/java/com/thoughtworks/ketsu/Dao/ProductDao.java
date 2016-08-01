@@ -1,11 +1,13 @@
 package com.thoughtworks.ketsu.Dao;
 
+import com.google.common.collect.FluentIterable;
 import com.thoughtworks.ketsu.domain.products.Product;
 import com.thoughtworks.ketsu.infrastructure.mongo.mappers.ProductMapper;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Map;
 
 import static org.jongo.Oid.withOid;
@@ -28,5 +30,10 @@ public class ProductDao implements ProductMapper {
     @Override
     public Product findById(String prodId) {
         return prodCollection.findOne(withOid(prodId)).as(Product.class);
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return FluentIterable.from(prodCollection.find().as(Product.class)).toList();
     }
 }
