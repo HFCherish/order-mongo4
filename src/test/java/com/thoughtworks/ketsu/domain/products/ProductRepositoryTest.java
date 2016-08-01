@@ -20,8 +20,9 @@ public class ProductRepositoryTest {
     @Test
     public void should_save_and_get_product() {
         Product save = productRepository.save(productJsonForTest());
-        Optional<Product> fetched = productRepository.findById("prodId");
+        Optional<Product> fetched = productRepository.findById(save.id);
 
         assertThat(fetched.isPresent(), is(true));
+        assertThat(fetched.get().id, is(save.id));
     }
 }
