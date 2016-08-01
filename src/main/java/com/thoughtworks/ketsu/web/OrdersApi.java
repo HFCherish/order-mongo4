@@ -2,6 +2,7 @@ package com.thoughtworks.ketsu.web;
 
 import com.thoughtworks.ketsu.domain.users.User;
 import com.thoughtworks.ketsu.web.jersey.Routes;
+import com.thoughtworks.ketsu.web.validators.OrderValidator;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -23,6 +24,8 @@ public class OrdersApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response placeOrder(Map<String, Object> info,
                                @Context Routes routes) {
+
+        new OrderValidator().validate(info);
 
         return Response.created(routes.orderUrl(user.getId(), user.placeOrder(info).getId())).build();
     }
