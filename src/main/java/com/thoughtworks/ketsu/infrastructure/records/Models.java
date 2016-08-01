@@ -4,6 +4,8 @@ import com.google.inject.AbstractModule;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.thoughtworks.ketsu.domain.products.ProductRepository;
+import com.thoughtworks.ketsu.infrastructure.repositories.ProductRepositoryImpl;
 import org.jongo.Jongo;
 
 import java.net.UnknownHostException;
@@ -60,6 +62,7 @@ public class Models extends AbstractModule {
         DB db = mongoClient.getDB("mongodb_store");
         Jongo jongo = new Jongo(db);
         bind(Jongo.class).toInstance(jongo);
+        bind(ProductRepository.class).to(ProductRepositoryImpl.class);
     }
 
     protected final ClassLoader getResourceClassLoader() {
