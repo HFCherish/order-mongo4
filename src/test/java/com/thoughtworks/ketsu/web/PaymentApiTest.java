@@ -55,6 +55,15 @@ public class PaymentApiTest extends ApiSupport{
         Response response = post(baseUrl, info);
 
         assertThat(response.getStatus(), is(400));
+    }
+
+    @Test
+    public void should_get_payment() {
+        Map<String, Object> info = paymentJsonForTest();
+        order.pay(info);
+        Response response = get(baseUrl);
+
+        assertThat(response.getStatus(), is(200));
 
     }
 }
