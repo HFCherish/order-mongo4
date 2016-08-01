@@ -86,6 +86,7 @@ public class OrdersApiTest extends ApiSupport{
         assertThat(fetched.get("name"), is(info.get("name")));
         assertThat(fetched.get("address"), is(info.get("address")));
         assertThat(fetched.get("phone"), is(info.get("phone")));
+        assertThat((double)fetched.get("total_price"), is(PRODUCT_PRICE * PRODUCT_QUANTITY));
         assertThat(fetched.get("created_at"), is(new ObjectId(save.getId()).getDate().toString()));
 
         List<Map> items = (List)fetched.get("order_items");

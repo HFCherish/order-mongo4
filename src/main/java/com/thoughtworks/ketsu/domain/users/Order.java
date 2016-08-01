@@ -7,13 +7,12 @@ import org.bson.types.ObjectId;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Order implements Record{
+public class Order implements Record {
     @MongoId
     @MongoObjectId
     String id;
@@ -36,6 +35,7 @@ public class Order implements Record{
             put("name", name);
             put("address", address);
             put("phone", phone);
+            put("total_price", getTotalPrice());
             put("created_at", new ObjectId(id).getDate().toString());
         }};
     }
@@ -44,6 +44,14 @@ public class Order implements Record{
     public Map<String, Object> toJson(Routes routes) {
         Map<String, Object> res = toRefJson(routes);
         res.put("order_items", orderItems.stream().map(orderItem -> orderItem.toJson(routes)).collect(Collectors.toList()));
+        return res;
+    }
+
+    public double getTotalPrice() {
+        double res = 0;
+        for (OrderItem orderItem : orderItems) {
+            res += orderItem.amount * orderItem.quantity;
+        }
         return res;
     }
 }
