@@ -72,6 +72,13 @@ public class PaymentApiTest extends ApiSupport{
         assertThat(fetched.get("pay_type"), is(info.get("pay_type")));
         assertThat(fetched.get("amount"), is(info.get("amount")));
         assertThat(fetched.get("created_at"), is(pay.getCreatedAt().toString()));
+    }
+
+    @Test
+    public void should_404_when_get_payment_given_not_pay() {
+        Response response = get(baseUrl);
+
+        assertThat(response.getStatus(), is(404));
 
     }
 }

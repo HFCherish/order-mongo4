@@ -73,6 +73,7 @@ public class OrderDao implements OrderMapper {
             @Override
             public Payment map(DBObject result) {
                 Object paymentInfo = result.get("payment");
+                if(paymentInfo == null) return null;
                 try {
                     return new ObjectMapper().readerFor(Payment.class).with(new InjectableValues.Std().addValue("order", order)).readValue(paymentInfo.toString());
                 } catch (IOException e) {
