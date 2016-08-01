@@ -23,6 +23,7 @@ public class UsersApiTest extends ApiSupport{
 
         assertThat(response.getStatus(), is(201));
         assertThat(response.getLocation().toString(), containsString(baseUrl));
+        assertThat(response.getLocation().toString().matches(".*/[a-zA-Z\\d]+$"), is(true));
 
     }
 }

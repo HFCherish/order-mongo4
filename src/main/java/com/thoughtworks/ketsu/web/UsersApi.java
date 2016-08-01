@@ -22,7 +22,7 @@ public class UsersApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response register(Map<String, Object> info,
                              @Context Routes routes) {
-        userRepository.save(info);
-        return Response.created(routes.userUrl("")).build();
+
+        return Response.created(routes.userUrl(userRepository.save(info).getId())).build();
     }
 }
