@@ -20,6 +20,7 @@ import java.util.Map;
 
 import static com.thoughtworks.ketsu.support.TestHelper.*;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -82,12 +83,7 @@ public class OrdersApiTest extends ApiSupport{
 
         assertThat(response.getStatus(), is(200));
         Map fetched = response.readEntity(Map.class);
-        assertThat(fetched.get("uri").toString(), containsString(baseUrl + "/" + save.getId()));
-        assertThat(fetched.get("name"), is(info.get("name")));
-        assertThat(fetched.get("address"), is(info.get("address")));
-        assertThat(fetched.get("phone"), is(info.get("phone")));
-        assertThat((double)fetched.get("total_price"), is(PRODUCT_PRICE * PRODUCT_QUANTITY));
-        assertThat(fetched.get("created_at"), is(new ObjectId(save.getId()).getDate().toString()));
+        verifyOrderInfo(info, save, fetched);
 
         List<Map> items = (List)fetched.get("order_items");
         assertThat(items.size(), is(1));
@@ -95,6 +91,15 @@ public class OrdersApiTest extends ApiSupport{
         assertThat(items.get(0).get("quantity"), is(PRODUCT_QUANTITY));
         assertThat((double)items.get(0).get("amount"), is(PRODUCT_PRICE));
         assertThat(items.get(0).get("uri").toString(), containsString("/products/" + product.getId()));
+    }
+
+    private void verifyOrderInfo(Map<String, Object> info, Order save, Map fetched) {
+        assertThat(fetched.get("uri").toString(), containsString(baseUrl + "/" + save.getId()));
+        assertThat(fetched.get("name"), is(info.get("name")));
+        assertThat(fetched.get("address"), is(info.get("address")));
+        assertThat(fetched.get("phone"), is(info.get("phone")));
+        assertThat((double)fetched.get("total_price"), is(PRODUCT_PRICE * PRODUCT_QUANTITY));
+        assertThat(fetched.get("created_at"), is(new ObjectId(save.getId()).getDate().toString()));
     }
 
     @Test
@@ -115,5 +120,9 @@ public class OrdersApiTest extends ApiSupport{
         Response response = get(baseUrl);
 
         assertThat(response.getStatus(), is(200));
+        List<Map> orderInfo = response.readEntity(List.class);
+        assertThat(orderInfo.size(), is(1));
+        verifyOrderInfo(info, save, orderInfo.get(0));
+        assertThat(orderInfo.get(0).get("order_items"), is(nullValue()));
     }
 }
