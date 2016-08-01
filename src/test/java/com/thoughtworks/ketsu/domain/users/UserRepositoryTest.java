@@ -21,8 +21,9 @@ public class UserRepositoryTest {
     @Test
     public void should_save_and_get_user() {
         User save = userRepository.save(userJsonForTest(USER_NAME));
-        Optional<User> fetched = userRepository.findById("");
+        Optional<User> fetched = userRepository.findById(save.id);
 
         assertThat(fetched.isPresent(), is(true));
+        assertThat(fetched.get().id, is(save.id));
     }
 }
