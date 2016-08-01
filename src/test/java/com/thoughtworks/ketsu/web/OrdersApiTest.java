@@ -106,4 +106,14 @@ public class OrdersApiTest extends ApiSupport{
 
         assertThat(response.getStatus(), is(404));
     }
+
+    @Test
+    public void should_get_all_orders() {
+        Map<String, Object> info = orderJsonForTest(product.getId());
+        Order save = user.placeOrder(info);
+
+        Response response = get(baseUrl);
+
+        assertThat(response.getStatus(), is(200));
+    }
 }
