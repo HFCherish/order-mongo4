@@ -8,6 +8,7 @@ public class TestHelper {
 
     public static final String USER_NAME = "Petrina";
     public static final String INVALID_USER_NAME = "PetrinL;';a";
+    public static final int PRODUCT_QUANTITY = 2;
 
     public static Map<String, Object> productJsonForTest() {
         return new HashMap() {{
@@ -30,7 +31,7 @@ public class TestHelper {
             put("phone", "689067879");
             put("order_items", Arrays.asList(new HashMap() {{
                 put("product_id", prodId);
-                put("quantity", 2);
+                put("quantity", PRODUCT_QUANTITY);
             }}));
         }};
     }

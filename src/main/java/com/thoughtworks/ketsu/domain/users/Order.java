@@ -7,9 +7,11 @@ import org.bson.types.ObjectId;
 import org.jongo.marshall.jackson.oid.MongoId;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Order implements Record{
     @MongoId
@@ -20,6 +22,7 @@ public class Order implements Record{
     String name;
     String address;
     String phone;
+    @JsonProperty("order_items")
     List<OrderItem> orderItems;
 
     public String getId() {
@@ -39,6 +42,8 @@ public class Order implements Record{
 
     @Override
     public Map<String, Object> toJson(Routes routes) {
-        return toRefJson(routes);
+        Map<String, Object> res = toRefJson(routes);
+        res.put("order_items", orderItems.stream().map(orderItem -> orderItem.toJson(routes)).collect(Collectors.toList()));
+        return res;
     }
 }
