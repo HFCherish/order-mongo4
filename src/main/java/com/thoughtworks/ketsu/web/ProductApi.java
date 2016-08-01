@@ -22,7 +22,6 @@ public class ProductApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(Map<String, Object> info,
                            @Context Routes routes) {
-        productRepository.save(info);
-        return Response.created(routes.productUrl("")).build();
+        return Response.created(routes.productUrl(productRepository.save(info).getId())).build();
     }
 }
