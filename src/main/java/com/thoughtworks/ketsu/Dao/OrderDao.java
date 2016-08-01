@@ -1,14 +1,16 @@
 package com.thoughtworks.ketsu.Dao;
 
+import com.fasterxml.jackson.databind.InjectableValues;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.DBObject;
 import com.thoughtworks.ketsu.domain.users.Order;
+import com.thoughtworks.ketsu.domain.users.Payment;
 import com.thoughtworks.ketsu.infrastructure.mongo.mappers.OrderMapper;
 import com.thoughtworks.ketsu.util.SafeInjector;
-import org.jongo.Find;
-import org.jongo.Jongo;
-import org.jongo.MongoCollection;
-import org.jongo.MongoCursor;
+import org.jongo.*;
 
 import javax.inject.Inject;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -49,5 +51,33 @@ public class OrderDao implements OrderMapper {
             orders.add(SafeInjector.injectMembers(cursor.next()));
         }
         return orders;
+    }
+
+    @Override
+    public Payment getPaymentOf(String orderId) {
+        FindOne one = orderCollection.findOne(withOid(orderId));
+        return getPayment(one);
+    }
+
+    @Override
+    public Payment pay(Map<String, Object> info, String orderId) {
+        orderCollection.update(withOid(orderId)).with("{$set: {payment:#}}", info);
+        return getPaymentOf(orderId);
+    }
+
+    private Payment getPayment(FindOne one) {
+        Order order = one.as(Order.class);
+        return one.map(new ResultHandler<Payment>() {
+            @Override
+            public Payment map(DBObject result) {
+                Object paymentInfo = result.get("payment");
+                try {
+                    return new ObjectMapper().readerFor(Payment.class).with(new InjectableValues.Std().addValue("order", order)).readValue(paymentInfo.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
     }
 }
