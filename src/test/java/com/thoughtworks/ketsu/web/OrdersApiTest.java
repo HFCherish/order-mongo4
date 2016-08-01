@@ -92,7 +92,9 @@ public class OrdersApiTest extends ApiSupport{
         assertThat(items.size(), is(1));
         assertThat(items.get(0).get("product_id"), is(product.getId()));
         assertThat(items.get(0).get("quantity"), is(PRODUCT_QUANTITY));
+        assertThat((double)items.get(0).get("amount"), is(PRODUCT_PRICE));
         assertThat(items.get(0).get("uri").toString(), containsString("/products/" + product.getId()));
+
 
     }
 }

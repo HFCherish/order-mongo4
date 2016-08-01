@@ -9,12 +9,13 @@ public class TestHelper {
     public static final String USER_NAME = "Petrina";
     public static final String INVALID_USER_NAME = "PetrinL;';a";
     public static final int PRODUCT_QUANTITY = 2;
+    public static final double PRODUCT_PRICE = 1.2;
 
     public static Map<String, Object> productJsonForTest() {
         return new HashMap() {{
            put("name", "Imran");
            put("description", "teacher");
-           put("price", 1.2);
+           put("price", PRODUCT_PRICE);
         }};
     }
 

@@ -36,4 +36,8 @@ public class ProductDao implements ProductMapper {
     public List<Product> findAll() {
         return FluentIterable.from(prodCollection.find().as(Product.class)).toList();
     }
+
+    public double getPriceOf(String id) {
+        return (double)prodCollection.findOne(withOid(id)).as(Map.class).get("price");
+    }
 }
