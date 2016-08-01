@@ -23,9 +23,10 @@ public class OrdersApi {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response placeOrder(Map<String, Object> info,
-                               @Context Routes routes) {
+                               @Context Routes routes,
+                               @Context OrderValidator orderValidator) {
 
-        new OrderValidator().validate(info);
+        orderValidator.validate(info);
 
         return Response.created(routes.orderUrl(user.getId(), user.placeOrder(info).getId())).build();
     }

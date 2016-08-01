@@ -6,6 +6,7 @@ import com.thoughtworks.ketsu.domain.users.User;
 import com.thoughtworks.ketsu.domain.users.UserRepository;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,4 +60,15 @@ public class OrdersApiTest extends ApiSupport{
         assertThat(response.getStatus(), is(400));
 
     }
+
+    @Test
+    public void should_400_when_create_given_invalid_order_item_info() {
+        Map<String, Object> info = orderJsonForTest(new ObjectId().toString());
+
+        Response response = post(baseUrl, info);
+
+        assertThat(response.getStatus(), is(400));
+
+    }
+
 }
