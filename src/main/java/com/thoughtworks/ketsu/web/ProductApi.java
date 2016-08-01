@@ -1,13 +1,11 @@
 package com.thoughtworks.ketsu.web;
 
+import com.thoughtworks.ketsu.domain.products.Product;
 import com.thoughtworks.ketsu.domain.products.ProductRepository;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 import com.thoughtworks.ketsu.web.validators.NullFieldValidator;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -27,5 +25,13 @@ public class ProductApi {
         new NullFieldValidator().validate(Arrays.asList("name", "description", "price"), info);
 
         return Response.created(routes.productUrl(productRepository.save(info).getId())).build();
+    }
+
+    @Path("{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Product getOne(@PathParam("id") String id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 }

@@ -1,10 +1,13 @@
 package com.thoughtworks.ketsu.web;
 
+import com.thoughtworks.ketsu.domain.products.Product;
+import com.thoughtworks.ketsu.domain.products.ProductRepository;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import java.util.Map;
@@ -17,6 +20,8 @@ import static org.junit.Assert.*;
 @RunWith(ApiTestRunner.class)
 public class ProductApiTest extends ApiSupport{
     private String baseUrl = "/products";
+    @Inject
+    ProductRepository productRepository;
 
     @Test
     public void should_create_product() {
@@ -36,5 +41,16 @@ public class ProductApiTest extends ApiSupport{
         Response response = post(baseUrl, info);
 
         assertThat(response.getStatus(), is(400));
+    }
+
+    @Test
+    public void should_get_some_product() {
+        Map<String, Object> info = productJsonForTest();
+        Product save = productRepository.save(info);
+
+        Response response = get(baseUrl + "/" + save.getId());
+
+        assertThat(response.getStatus(), is(200));
+
     }
 }
