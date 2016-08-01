@@ -26,7 +26,7 @@ public class NullFieldValidator {
         return res;
     }
 
-    Map<String, Object> errorItem(String name, String message) {
+    public Map<String, Object> errorItem(String name, String message) {
         return new HashMap() {{
             put("field", name);
             put("message", message);

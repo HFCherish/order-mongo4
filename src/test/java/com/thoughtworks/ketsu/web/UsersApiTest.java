@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 
 import javax.ws.rs.core.Response;
 
+import static com.thoughtworks.ketsu.support.TestHelper.INVALID_USER_NAME;
 import static com.thoughtworks.ketsu.support.TestHelper.USER_NAME;
 import static com.thoughtworks.ketsu.support.TestHelper.userJsonForTest;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -24,6 +25,14 @@ public class UsersApiTest extends ApiSupport{
         assertThat(response.getStatus(), is(201));
         assertThat(response.getLocation().toString(), containsString(baseUrl));
         assertThat(response.getLocation().toString().matches(".*/[a-zA-Z\\d]+$"), is(true));
+
+    }
+
+    @Test
+    public void should_400_when_name_invalid() {
+        Response response = post(baseUrl, userJsonForTest(INVALID_USER_NAME));
+
+        assertThat(response.getStatus(), is(400));
 
     }
 }

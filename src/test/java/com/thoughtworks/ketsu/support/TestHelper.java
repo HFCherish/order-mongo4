@@ -6,6 +6,7 @@ import java.util.Map;
 public class TestHelper {
 
     public static final String USER_NAME = "Petrina";
+    public static final String INVALID_USER_NAME = "PetrinL;';a";
 
     public static Map<String, Object> productJsonForTest() {
         return new HashMap() {{
