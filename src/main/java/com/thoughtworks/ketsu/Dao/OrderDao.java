@@ -2,6 +2,7 @@ package com.thoughtworks.ketsu.Dao;
 
 import com.fasterxml.jackson.databind.InjectableValues;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.mongodb.DBObject;
 import com.thoughtworks.ketsu.domain.users.Order;
 import com.thoughtworks.ketsu.domain.users.Payment;
@@ -75,7 +76,9 @@ public class OrderDao implements OrderMapper {
                 Object paymentInfo = result.get("payment");
                 if(paymentInfo == null) return null;
                 try {
-                    return new ObjectMapper().readerFor(Payment.class).with(new InjectableValues.Std().addValue("order", order)).readValue(paymentInfo.toString());
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    objectMapper.registerModule(new JodaModule());
+                    return objectMapper.readerFor(Payment.class).with(new InjectableValues.Std().addValue("order", order)).readValue(paymentInfo.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

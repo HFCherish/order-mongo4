@@ -9,7 +9,7 @@ import org.joda.time.DateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Payment implements Record{
+public class Payment implements Record {
     @JsonProperty("amount")
     double amount;
     @JsonProperty("pay_type")
@@ -18,7 +18,7 @@ public class Payment implements Record{
     @JacksonInject("order")
     Order order;
     @JsonProperty("created_at")
-    private String createdAt;
+    DateTime createdAt;
 
     @Override
     public Map<String, Object> toRefJson(Routes routes) {
@@ -37,6 +37,6 @@ public class Payment implements Record{
     }
 
     public DateTime getCreatedAt() {
-        return new DateTime(createdAt);
+        return createdAt;
     }
 }
