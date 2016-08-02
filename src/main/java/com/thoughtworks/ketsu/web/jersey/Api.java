@@ -24,10 +24,11 @@ public class Api extends ResourceConfig {
         String username = System.getenv().getOrDefault("MONGODB_USER", "admin");
         String password = System.getenv().getOrDefault("MONGODB_PASS", "mypass");
         String connectURL = String.format(
-                "mongodb://%s:%s@%s/%s",
+                "mongodb://%s:%s@%s:%s/%s",
                 username,
                 password,
                 host,
+                port,
                 dbname
         );
 
