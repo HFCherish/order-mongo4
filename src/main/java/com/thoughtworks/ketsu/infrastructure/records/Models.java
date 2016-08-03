@@ -22,9 +22,9 @@ import java.net.UnknownHostException;
 import java.util.Properties;
 
 public class Models extends AbstractModule {
-    private static final String DEFAULT_CONFIG_RESOURCE = "db.properties";
+//    private static final String DEFAULT_CONFIG_RESOURCE = "db.properties";
 
-    private final String classPathResource;
+//    private final String classPathResource;
 
     private final String environmentId;
 
@@ -34,13 +34,13 @@ public class Models extends AbstractModule {
 
 
     public Models(String environment) {
-        this(environment, DEFAULT_CONFIG_RESOURCE, new Properties());
+        this(environment, new Properties());
     }
 
 
-    public Models(String environment, String classPathResource, Properties properties) {
+    public Models(String environment, Properties properties) {
         this.environmentId = environment;
-        this.classPathResource = classPathResource;
+//        this.classPathResource = classPathResource;
         this.properties = properties;
     }
 
