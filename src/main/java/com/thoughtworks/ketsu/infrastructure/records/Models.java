@@ -30,7 +30,7 @@ public class Models extends AbstractModule {
 
     private final Properties properties;
 
-    private ClassLoader resourcesClassLoader = getDefaultClassLoader();
+//    private ClassLoader resourcesClassLoader = getDefaultClassLoader();
 
 
     public Models(String environment) {
@@ -79,8 +79,8 @@ public class Models extends AbstractModule {
     }
 
 
-    private ClassLoader getDefaultClassLoader() {
-        return getClass().getClassLoader();
-    }
+//    private ClassLoader getDefaultClassLoader() {
+//        return getClass().getClassLoader();
+//    }
 }
 
