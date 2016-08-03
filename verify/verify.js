@@ -11,7 +11,7 @@ var endpoint = process.env.ENDPOINT;
 
 console.log(endpoint);
 
-var productId, productURI, userName, orderURI, orderId, userId;
+var productId, productURI, userName, orderURI, orderId, userId, userUri;
 
 describe("Test", function () {
   this.timeout(60000);
@@ -197,7 +197,7 @@ describe("Test", function () {
         assert.lengthOf(result.missing, 0, "Missing/unresolved JSON schema $refs (" + result.missing && result.missing.join(', ') + ") in schema: " + JSON.stringify(schema, null, 4) + " Error");
         assert.ok(result.valid, "Got unexpected response body: " + (result.error && result.error.message) + " " + JSON.stringify(schema, null, 4) + " Error");
       }
-      UserUri = response.headers['location'];
+      userUri = response.headers['location'];
       var splits = userUri.split("/");
       userId = splits[splits.length - 1];
       done();
