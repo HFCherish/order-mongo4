@@ -99,7 +99,7 @@ public class OrdersApiTest extends ApiSupport{
         assertThat(fetched.get("address"), is(info.get("address")));
         assertThat(fetched.get("phone"), is(info.get("phone")));
         assertThat((double)fetched.get("total_price"), is(PRODUCT_PRICE * PRODUCT_QUANTITY));
-        assertThat(fetched.get("created_at"), is(new ObjectId(save.getId()).getDate().toString()));
+        assertThat(fetched.get("created_at"), is(new ObjectId(save.getId()).getDate().getTime()));
     }
 
     @Test

@@ -42,7 +42,7 @@ public class Order implements Record {
             put("address", address);
             put("phone", phone);
             put("total_price", getTotalPrice());
-            put("created_at", new ObjectId(id).getDate().toString());
+            put("created_at", new ObjectId(id).getDate().getTime());
         }};
     }
 
