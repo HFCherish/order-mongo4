@@ -70,7 +70,7 @@ public class Models extends AbstractModule {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        DB db = mongoClient.getDB("mongodb_store");
+        DB db = mongoClient.getDB(dbname);
         Jongo jongo = new Jongo(db);
         bind(Jongo.class).toInstance(jongo);
         bind(ProductRepository.class).to(ProductRepositoryImpl.class);
