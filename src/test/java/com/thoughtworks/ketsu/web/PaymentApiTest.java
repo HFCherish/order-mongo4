@@ -8,6 +8,7 @@ import com.thoughtworks.ketsu.domain.users.User;
 import com.thoughtworks.ketsu.domain.users.UserRepository;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 import static com.thoughtworks.ketsu.support.TestHelper.*;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -71,7 +73,7 @@ public class PaymentApiTest extends ApiSupport{
         assertThat(fetched.get("uri").toString(), containsString(baseUrl));
         assertThat(fetched.get("pay_type"), is(info.get("pay_type")));
         assertThat(fetched.get("amount"), is(info.get("amount")));
-        assertThat(fetched.get("created_at"), is(pay.getCreatedAt().toString()));
+        assertThat(fetched.get("created_at").toString(), is(notNullValue()));
     }
 
     @Test

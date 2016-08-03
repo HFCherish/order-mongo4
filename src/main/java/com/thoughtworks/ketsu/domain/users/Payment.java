@@ -27,7 +27,7 @@ public class Payment implements Record {
             put("uri", routes.paymentUrl(order.userId, order.id));
             put("pay_type", payType);
             put("amount", amount);
-            put("created_at", getCreatedAt().toString());
+            put("created_at", getCreatedAt());
         }};
     }
 
