@@ -32,15 +32,11 @@ public class Models extends AbstractModule {
 
     private ClassLoader resourcesClassLoader = getDefaultClassLoader();
 
-    private ClassLoader driverClassLoader = getDefaultClassLoader();
 
     public Models(String environment) {
         this(environment, DEFAULT_CONFIG_RESOURCE, new Properties());
     }
 
-    public Models(String environment, Properties properties) {
-        this(environment, DEFAULT_CONFIG_RESOURCE, properties);
-    }
 
     public Models(String environment, String classPathResource, Properties properties) {
         this.environmentId = environment;
@@ -82,9 +78,6 @@ public class Models extends AbstractModule {
         bind(OrderValidator.class);
     }
 
-    protected final ClassLoader getResourceClassLoader() {
-        return resourcesClassLoader;
-    }
 
     private ClassLoader getDefaultClassLoader() {
         return getClass().getClassLoader();

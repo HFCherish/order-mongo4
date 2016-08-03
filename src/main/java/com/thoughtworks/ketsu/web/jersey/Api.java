@@ -17,24 +17,8 @@ import static org.jvnet.hk2.guice.bridge.api.GuiceBridge.getGuiceBridge;
 public class Api extends ResourceConfig {
     @Inject
     public Api(ServiceLocator locator) throws Exception {
-        Properties properties = new Properties();
-        String dbname = System.getenv().getOrDefault("MONGODB_DATABASE", "mongodb_store");
-        String host = System.getenv().getOrDefault("MONGODB_HOST", "localhost");
-        String port = System.getenv().getOrDefault("MONGODB_PORT", "27017");
-        String username = System.getenv().getOrDefault("MONGODB_USER", "admin");
-        String password = System.getenv().getOrDefault("MONGODB_PASS", "mypass");
-        String connectURL = String.format(
-                "mongodb://%s:%s@%s:%s/%s",
-                username,
-                password,
-                host,
-                port,
-                dbname
-        );
 
-        properties.setProperty("db.url", connectURL);
-
-        bridge(locator, Guice.createInjector(new Models("development", properties), new AbstractModule() {
+        bridge(locator, Guice.createInjector(new Models("development"), new AbstractModule() {
             @Override
             protected void configure() {
                 bind(ServiceLocator.class).toInstance(locator);
