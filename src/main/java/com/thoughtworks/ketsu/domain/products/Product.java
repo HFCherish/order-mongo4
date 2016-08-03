@@ -27,7 +27,7 @@ public class Product implements Record{
             put("name", name);
             put("description", description);
             put("price", price);
-            put("_id", id);
+            put("id", id);
         }};
     }
 

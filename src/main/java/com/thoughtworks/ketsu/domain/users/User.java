@@ -30,7 +30,7 @@ public class User implements Record {
         return new HashMap() {{
             put("uri", routes.userUrl(id));
             put("name", name);
-            put("_id", id);
+            put("id", id);
         }};
     }
 

@@ -62,7 +62,7 @@ public class ProductApiTest extends ApiSupport{
         assertThat(fetchedInfo.get("name"), is(info.get("name")));
         assertThat(fetchedInfo.get("description"), is(info.get("description")));
         assertThat(fetchedInfo.get("price"), is(info.get("price")));
-        assertThat(fetchedInfo.get("_id"), is(save.getId()));
+        assertThat(fetchedInfo.get("id"), is(save.getId()));
     }
 
     @Test

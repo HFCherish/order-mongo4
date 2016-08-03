@@ -54,7 +54,7 @@ public class UsersApiTest extends ApiSupport{
         Map fetchedInfo = response.readEntity(Map.class);
         assertThat(fetchedInfo.get("uri").toString(), containsString(baseUrl + "/" + save.getId()));
         assertThat(fetchedInfo.get("name"), is(info.get("name")));
-        assertThat(fetchedInfo.get("_id"), is(save.getId()));
+        assertThat(fetchedInfo.get("id"), is(save.getId()));
     }
 
     @Test
